@@ -1,80 +1,226 @@
 import { Empleado, addEmpleado, getEmpleado, deleteEmpleado, updateEmpleado, searchEmpleado, Empleado } from '../models/empleado';
 
-const empleado = new Empleado();
+exports.addEmpleado = async (req, res) => {
 
+    try {
 
-exports.addEmpleado = async (req, res) => { }
+        const { nombre, apellido, dni, fecha_contratacion, salario, departamento, pais, cargo } = req.body;
 
-try {
+        if (!nombre || !apellido || !dni || !fecha_contratacion || !salario || !departamento || !pais || !cargo) {
 
-    const { nombre, apellido, dni, fecha_contratacion, salario, departamento, pais, cargo } = req.body;
+            return res.status(400).json({
 
-    const nuevoEmpleado = new Empleado(nombre,apellido,dni,salario,departamento,pais,cargo);
+                stauts: 'fail',
+                message: '¡Todos los campos son requeridos!'
+            })
+        }
 
-    if (!nombre || !apellido || !dni || !fecha_contratacion || !salario || !departamento || !pais || !cargo) {
+        const verificarEmpleado = await getEmpleado(dni);
 
-        return res.status(400).json({
+        if (verificarEmpleado.success) {
 
-            stauts: 'fail',
-            message: '¡Todos los campos son requeridos!'
+            return res.status(400).json({
+
+                status: 'fail',
+                message: '¡El empleado ya existe!'
+
+            })
+        } else {
+
+            const newEmpleado = new Empleado(nombre, apellido, fecha_contratacion, salario, departamento, pais, cargo);
+            const nuevoEmpleadoGuardado = await addEmpleado(newEmpleado);
+
+            return res.status(201).json({
+                status: 'success',
+                message: "¡Empleado añadido con Exito!",
+                data: nuevoEmpleadoGuardado
+
+            })
+        }
+
+    } catch (error) {
+
+        return res.status(500).json({
+
+            status: 'error',
+            message: 'Error al añadir el nuevo empleado',
+            error: error.message
+
         })
+
     }
-
-    const verificarEmpleado = empleado.getEmpleado(dni);
-
-    if (verificarEmpleado.length() > 0) {
-
-        return res.status(400).json({
-
-            status: 'fail',
-            message: '¡El empleado ya existe!'
-
-        })
-    }
-
-    const newEmpleado = await empleado.addEmpleado(nuevoEmpleado)
-
-    res.status(201).json({
-
-
-        
-    })
-
-} catch (error) {
-
-
-
 }
-
-
-
-
-
 
 
 exports.getEmpleado = async (req, res) => {
 
+    try {
 
+        const dni = req.body;
 
+        if (typeof (dni) === 'number' && Number.isFinite(dni)) {
+
+            const empleado = await getEmpleado(dni);
+
+            res.status(201).json({
+
+                status: 'success',
+                message: '¡Operacion Realizada Exitosamente!',
+                data: empleado
+
+            })
+
+        } else {
+
+            res.status(401).json({
+
+                status: 'error',
+                message: '¡El dni ingresado no tiene el formato correcto!'
+
+            })
+        }
+
+    } catch (error) {
+
+        res.status(500).json({
+
+            status: 'error',
+            message: 'Error al solicitar el empleado',
+            error: error.message
+
+        })
+    }
 }
 
 
 exports.deleteEmpleado = async (req, res) => {
 
+    try {
 
+        const dni = req.body;
 
+        if (typeof (dni) === 'number' && Number.isFinite(dni)) {
+
+            const empleado = await deleteEmpleado(dni);
+
+            res.status(201).json({
+
+                status: 'success',
+                message: 'Empleado eliminado Exitosamente!',
+
+            })
+
+        } else {
+
+            res.status(401).json({
+
+                status: 'error',
+                message: '¡El dni ingresado no tiene el formato correcto!'
+
+            })
+        }
+
+    } catch (error) {
+
+        res.status(500).json({
+
+            status: 'error',
+            message: 'Error al eliminar el empleado',
+            error: error.message
+
+        })
+    }
 }
+
 
 exports.updateEmpleado = async (req, res) => {
 
+    try {
 
+        const { nombre, apellido, dni, fecha_contratacion, salario, departamento, pais, cargo } = req.body;
 
+        if (!nombre || !apellido || !dni || !fecha_contratacion || !salario || !departamento || !pais || !cargo) {
+
+            return res.status(400).json({
+
+                stauts: 'fail',
+                message: '¡Todos los campos son requeridos!'
+            })
+        }
+
+        const verificarEmpleado = await getEmpleado(dni);
+
+        if (verificarEmpleado.success) {
+
+            const empleadoActualizado = new Empleado(nombre, apellido, fecha_contratacion, salario, departamento, pais, cargo);
+            await updateEmpleado(empleadoActualizado);
+
+            return res.status(201).json({
+                status: 'success',
+                message: "¡Empleado actualizado con Exito!",
+                data: empleadoActualizado
+
+            })
+
+        } else {
+
+            return res.status(400).json({
+
+                status: 'fail',
+                message: '¡El empleadono existe!'
+
+            })
+
+        }
+
+    } catch (error) {
+
+        return res.status(500).json({
+
+            status: 'error',
+            message: '¡Error al actualizar el empleado!',
+            error: error.message
+
+        })
+    }
 
 }
 
 exports.searchEmpleado = async (req, res) => {
 
+    try {
 
+        const nombre = req.body;
+
+        if (typeof (nombre) == 'string' && String.isFinite) {
+
+            const empleado = searchEmpleado(nombre);
+
+            res.status(201).json({
+
+                status: 'success',
+                message: '¡Empleado encontrado!',
+                data: empleado
+            })
+
+        } else {
+
+            res.status(401).json({
+
+                status: 'error',
+                message: '¡El nombre tiene un formato incorrecto!'
+
+            })
+        }
+    } catch (error) {
+
+        res.status(501).json({
+            status: 'error',
+            message: '¡Error al buscar el empleado!',
+            error: error.message
+        })
+
+    }
 
 
 }
