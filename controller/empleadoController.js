@@ -56,24 +56,38 @@ exports.getEmpleado = async (req, res) => {
 
     try {
 
-        const dni = req.body;
+        const {dni} = req.body;
 
-        if (typeof (dni) === 'number' && Number.isFinite(dni)) {
+        if (typeof dni === 'string') {
 
-            const empleado = await getEmpleado(dni);
+            dniNumber = Number(dni);
 
-            res.status(201).json({
+            if (Number.isFinite(dniNumber)) {
 
-                status: 'success',
-                message: '¡Operacion Realizada Exitosamente!',
-                data: empleado
-
-            })
+                const empleado = await getEmpleado(dni);
+    
+                res.status(201).json({
+    
+                    status: 'success',
+                    message: '¡Operacion Realizada Exitosamente!',
+                    data: empleado
+    
+                })
+    
+            } else {
+    
+                res.status(401).json({
+    
+                    status: 'error',
+                    message: '¡El dni ingresado no tiene el formato correcto!'
+    
+                })
+            }
 
         } else {
 
             res.status(401).json({
-
+    
                 status: 'error',
                 message: '¡El dni ingresado no tiene el formato correcto!'
 
@@ -97,26 +111,35 @@ exports.deleteEmpleado = async (req, res) => {
 
     try {
 
-        const dni = req.body;
+        const {dni} = req.body;
 
-        if (typeof (dni) === 'number' && Number.isFinite(dni)) {
+        if (typeof dni === 'string') {
+            const dniNumber = Number(dni);
 
-            const empleado = await deleteEmpleado(dni);
+            if (Number.isFinite(dni)) {
 
-            res.status(201).json({
+                const empleado = await deleteEmpleado(dniNumber);
 
-                status: 'success',
-                message: 'Empleado eliminado Exitosamente!',
+                res.status(201).json({
 
-            })
+                    status: 'success',
+                    message: 'Empleado eliminado Exitosamente!',
+                    data: empleado
+                })
 
+            } else {
+
+                res.status(401).json({
+
+                    status: 'error',
+                    message: '¡El dni ingresado no tiene el formato correcto!'
+
+                })
+            }
         } else {
-
             res.status(401).json({
-
                 status: 'error',
                 message: '¡El dni ingresado no tiene el formato correcto!'
-
             })
         }
 
@@ -190,11 +213,11 @@ exports.searchEmpleado = async (req, res) => {
 
     try {
 
-        const nombre = req.body;
+        const {nombre} = req.body;
 
-        if (typeof (nombre) == 'string' && String.isFinite) {
+        if (typeof nombre == 'string' && nombre.trim() !== '') {
 
-            const empleado = searchEmpleado(nombre);
+            const empleado = await searchEmpleado(nombre);
 
             res.status(201).json({
 

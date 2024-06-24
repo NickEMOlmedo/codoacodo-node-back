@@ -51,11 +51,11 @@ exports.getProyecto = async (req, res) => {
 
     try {
         
-        const id = req.body;
+        const {id} = req.body;
 
         if ( typeof(dni) === 'number' && Number.isFinite(id)){
 
-            const proyecto = await.getProyecto(id);
+            const proyecto = await getProyecto(id);
 
             res.status(201).json({
                 status: 'success',
@@ -79,5 +79,18 @@ exports.getProyecto = async (req, res) => {
             message: 'Error en la solicitud',
             error: error.message
         })
+    }
+}
+
+
+exports.deleteProyecto = async (req, res)  => {
+
+    try {
+        
+        const {id} = req.body;
+
+        if ( typeof(id) == Number && isFinite(id))
+    } catch (error) {
+        
     }
 }
