@@ -17,7 +17,7 @@ export const addAsignacion = async (asignacion) => {
     const { empleado_id, proyecto_id, fecha_asignacion, horas_trabajadas } = asignacion;
 
     try {
-        const query = "INSERT INTO asignaciones (empleado_id , proyecto_id, fehca_asignacion, horas_tranajadas) VALUES (?,?,?,?)";
+        const query = "INSERT INTO asignaciones (empleado_id , proyecto_id, fecha_asignacion, horas_trabajadas) VALUES (?,?,?,?)";
         const [results] = await pool.query(query, [empleado_id, proyecto_id, fecha_asignacion, horas_trabajadas]);
 
         if (results.affectedRows === 0) {
@@ -70,9 +70,10 @@ export const updateAsignacion = async (asignacion) => {
     const { empleado_id, proyecto_id, fecha_asignacion, horas_trabajadas } = asignacion;
 
     try {
-        const query = "UPDATE asignaciones SET empleado_id = ?, proyecto_id = ?, fecha_asignacion = ?, horas_trabajadas = ? WHERE id = ? ";
-        const [results] = await pool.query(query, [empleado_id, proyecto_id, fecha_asignacion, horas_trabajadas, empleado_id]);
+        const query = "UPDATE asignaciones SET empleado_id = ?, proyecto_id = ?, fecha_asignacion = ?, horas_trabajadas = ? WHERE id = ?";
 
+        const [results] = await pool.query(query, [empleado_id, proyecto_id, fecha_asignacion, horas_trabajadas, asignacion.id]);
+        
         if (results.affectedRows === 0) {
             return { success: false };
         } else {

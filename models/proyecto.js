@@ -41,7 +41,6 @@ export const getProyecto = async (id) => {
         } else {
             return { success: false };
         }
-        throw (error);
     } catch (error) {
         throw (error);
     }
