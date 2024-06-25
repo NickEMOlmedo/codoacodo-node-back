@@ -58,13 +58,13 @@ exports.getEmpleado = async (req, res) => {
 
         const {dni} = req.body;
 
-        if (typeof dni === 'string') {
+        if (typeof dni === 'string' && dni.trim() !== '') {
 
             dniNumber = Number(dni);
 
             if (Number.isFinite(dniNumber)) {
 
-                const empleado = await getEmpleado(dni);
+                const empleado = await getEmpleado(dniNumber);
     
                 res.status(201).json({
     
