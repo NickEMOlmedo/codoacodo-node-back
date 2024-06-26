@@ -1,4 +1,4 @@
-import { Proyecto, addProyecto, getProyecto, deleteProyecto, updateProyecto, searchProyecto } from "../models/proyecto";
+import { Proyecto, addProyecto, getProyecto, deleteProyecto, updateProyecto, searchProyecto } from "../models/proyecto.js";
 
 exports.addProyecto = async (req, res) => {
 

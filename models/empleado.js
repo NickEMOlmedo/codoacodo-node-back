@@ -1,4 +1,4 @@
-import { pool } from "../config/dbConnection";
+import { pool } from "../config/dbConnection.js";
 
 export class Empleado {
 

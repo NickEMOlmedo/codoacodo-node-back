@@ -1,8 +1,15 @@
-const express = require('express');
-const router = express.Router();
-const { getEmpleado, addEmpleado } = require('../controller/empleadoController');
+import { Router } from 'express';
+import { getEmpleado, addEmpleado } from '../controller/empleadoController.js';
 
-router.get('/empleado', getEmpleado);
-router.post('/empleado', addEmpleado);
+const router = Router();
 
-module.exports = router;
+router.get('/:dni', getEmpleado);
+router.post('/', addEmpleado);
+
+router.get('/', (req, res) => {
+    res.json ({
+        mensaje: 'Hola desde empleados'
+    });
+});
+
+export default router;
