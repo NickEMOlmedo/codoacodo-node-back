@@ -1,4 +1,4 @@
-import { Empleado, addEmpleado as addEmpleadoFunction, getEmpleado as getEmpleadoFunction, deleteEmpleado, updateEmpleado, searchEmpleado } from '../models/empleado.js';
+import { Empleado, dbAddEmpleado, dbGetEmpleado, dbDeleteEmpleado, dbUpdateEmpleado, dbSearchEmpleado} from '../models/empleado.js';
 
 export const addEmpleado = async (req, res) => {
     try {
@@ -11,7 +11,7 @@ export const addEmpleado = async (req, res) => {
             });
         }
 
-        const verificarEmpleado = await getEmpleadoFunction(dni);
+        const verificarEmpleado = await dbGetEmpleado(dni);
 
         if (verificarEmpleado.success) {
             return res.status(400).json({
@@ -20,7 +20,7 @@ export const addEmpleado = async (req, res) => {
             });
         } else {
             const newEmpleado = new Empleado(nombre, apellido, dni, fecha_contratacion, salario, departamento, pais, cargo);
-            const nuevoEmpleadoGuardado = await addEmpleadoFunction(newEmpleado);
+            const nuevoEmpleadoGuardado = await dbAddEmpleado(newEmpleado);
 
             return res.status(201).json({
                 status: 'success',
@@ -45,7 +45,7 @@ export const getEmpleado = async (req, res) => {
             const dniNumber = Number(dni);
 
             if (Number.isFinite(dniNumber)) {
-                const empleado = await getEmpleadoFunction(dniNumber);
+                const empleado = await dbGetEmpleado(dniNumber);
 
                 return res.status(200).json({
                     status: 'success',
@@ -72,3 +72,45 @@ export const getEmpleado = async (req, res) => {
         });
     }
 };
+
+export const deleteEmpleado = async (req, res) => {
+    try {
+        
+        const { dni } = req.params;
+
+        if(typeof dni === 'string' && dni.trim() !== '') {
+
+            const dniNumber = Number(dni);
+
+            if(Number.isFinite(dniNumber)) {
+                
+                const empleado = await dbDeleteEmpleado(dniNumber);
+
+                return res.status(200).json({
+                    status: 'success',
+                    message: 'Empleado eliminado con exito',
+                    data: empleado
+                })
+            } else {
+
+                return res.status(400).json({
+                    status: 'error',
+                    message: '¡El dni no tiene el formato correcto!'
+                })
+            }
+        } else {
+            return res.status(400).json({
+                status: 'error',
+                message: '¡El dni no tiene el formato correcto!'
+            })
+        }
+
+    } catch (error) {
+        
+        return res.status(500).json({
+            status: 'error',
+            message: 'Error al eliminar empleado',
+            error: error.message
+        })
+    }
+}

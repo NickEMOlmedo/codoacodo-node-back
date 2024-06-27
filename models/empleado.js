@@ -15,7 +15,7 @@ export class Empleado {
   }
 }
 
-export const addEmpleado = async (empleado) => {
+export const dbAddEmpleado = async (empleado) => {
   try {
     const {
       nombre,
@@ -42,7 +42,7 @@ export const addEmpleado = async (empleado) => {
   }
 };
 
-export const getEmpleado = async (dni) => {
+export const dbGetEmpleado = async (dni) => {
 
   try {
     const query =
@@ -60,7 +60,7 @@ export const getEmpleado = async (dni) => {
   }
 };
 
-export const deleteEmpleado = async (dni) => {
+export const dbDeleteEmpleado = async (dni) => {
 
   try {
     const query = "DELETE FROM empleados where dni = ?"
@@ -77,7 +77,7 @@ export const deleteEmpleado = async (dni) => {
   }
 }
 
-export const updateEmpleado = async (empleado) => {
+export const dbUpdateEmpleado = async (empleado) => {
 
   const { id, nombre, apellido, fecha_contratacion, salario, departamento, pais, cargo } = empleado;
 
@@ -96,7 +96,7 @@ export const updateEmpleado = async (empleado) => {
   }
 }
 
-export const searchEmpleado = async (nombre) => {
+export const dbSearchEmpleado = async (nombre) => {
 
   try {
     const query = "SELECT id, nombre, apellido, fecha_contratacion, salario, departamento, pais, cargo FROM empleados WHERE nombre LIKE ?"
