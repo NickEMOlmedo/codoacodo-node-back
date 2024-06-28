@@ -10,7 +10,7 @@ export class Departamento {
     }
 }
 
-export const addDepartamento = async (departamento) => {
+export const dbAddDepartamento = async (departamento) => {
 
     const { nombre, ubicacion } = departamento;
 
@@ -29,7 +29,7 @@ export const addDepartamento = async (departamento) => {
     }
 }
 
-export const getDepartamento = async (id) => {
+export const dbGetDepartamento = async (id) => {
 
     try {
         const query = "SELECT * FROM departamentos WHERE id = ?";
@@ -46,7 +46,7 @@ export const getDepartamento = async (id) => {
     }
 };
 
-export const deleteDepartamento = async (id) => {
+export const dbDeleteDepartamento = async (id) => {
 
     try {
 
@@ -64,7 +64,7 @@ export const deleteDepartamento = async (id) => {
     }
 }
 
-export const updateDepartamento = async (departamento) => {
+export const dbUpdateDepartamento = async (departamento) => {
 
     const { id, nombre, ubicacion } = departamento;
 
@@ -84,7 +84,7 @@ export const updateDepartamento = async (departamento) => {
 }
 
 
-export const searchDepartamento = async (nombre) => {
+export const dbSearchDepartamento = async (nombre) => {
 
     try {
         const query = "SELECT id,nombre,ubicacion FROM departamentos WHERE nombre LIKE ?"

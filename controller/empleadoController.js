@@ -1,6 +1,15 @@
 import { Empleado, dbAddEmpleado, dbGetEmpleado, dbDeleteEmpleado, dbUpdateEmpleado, dbSearchEmpleado} from '../models/empleado.js';
 
+const validarDni = (dni) => {
+    if (typeof dni === 'string' && dni.trim() !== '') {
+        const dniNumber = Number(dni);
+        return Number.isFinite(dniNumber) ? dniNumber : null;
+    }
+    return null;
+}
+
 export const addEmpleado = async (req, res) => {
+
     try {
         const { nombre, apellido, dni, fecha_contratacion, salario, departamento, pais, cargo } = req.body;
 
@@ -32,22 +41,22 @@ export const addEmpleado = async (req, res) => {
         return res.status(500).json({
             status: 'error',
             message: 'Error al añadir el nuevo empleado',
-            error: error.message
+            error: message.error
         });
     }
 };
 
 export const getEmpleado = async (req, res) => {
+
     try {
         const { dni } = req.params;
+        const dniNumber = validarDni(dni);
 
-        if (typeof dni === 'string' && dni.trim() !== '') {
-            const dniNumber = Number(dni);
+            if (dniNumber !== null) {
 
-            if (Number.isFinite(dniNumber)) {
                 const empleado = await dbGetEmpleado(dniNumber);
 
-                return res.status(200).json({
+                return res.status(201).json({
                     status: 'success',
                     message: '¡Operación Realizada Exitosamente!',
                     data: empleado
@@ -58,59 +67,109 @@ export const getEmpleado = async (req, res) => {
                     message: '¡El DNI ingresado no tiene el formato correcto!'
                 });
             }
-        } else {
-            return res.status(400).json({
+
+        } catch (error) {
+
+            return res.status(500).json({
                 status: 'error',
-                message: '¡El DNI ingresado no tiene el formato correcto!'
+                message: 'Error al solicitar el empleado',
+                error: message.error
             });
         }
-    } catch (error) {
-        return res.status(500).json({
-            status: 'error',
-            message: 'Error al solicitar el empleado',
-            error: error.message
-        });
-    }
 };
+    
 
 export const deleteEmpleado = async (req, res) => {
+
     try {
-        
         const { dni } = req.params;
+        const dniNumber = validarDni(dni);
 
-        if(typeof dni === 'string' && dni.trim() !== '') {
-
-            const dniNumber = Number(dni);
-
-            if(Number.isFinite(dniNumber)) {
+            if(dniNumber !== null) {
                 
                 const empleado = await dbDeleteEmpleado(dniNumber);
 
-                return res.status(200).json({
+                return res.status(201).json({
                     status: 'success',
                     message: 'Empleado eliminado con exito',
                     data: empleado
-                })
+                });
             } else {
 
                 return res.status(400).json({
                     status: 'error',
                     message: '¡El dni no tiene el formato correcto!'
-                })
+                });
             }
-        } else {
-            return res.status(400).json({
-                status: 'error',
-                message: '¡El dni no tiene el formato correcto!'
-            })
-        }
 
     } catch (error) {
         
         return res.status(500).json({
             status: 'error',
             message: 'Error al eliminar empleado',
-            error: error.message
-        })
+            error: message.error
+        });
     }
-}
+};
+
+export const updateEmpleado = async (req, res) => {
+
+    try {
+        const {dni} = req.params;
+        const dniNumber = validarDni(dni);
+
+        if (dniNumber !== null) {
+
+            const empleado = await dbUpdateEmpleado(dniNumber);
+    
+            return res.status(201).json({
+                status: 'success',
+                message: 'Empleado actualizado con exito',
+                data: empleado
+            });
+        } else {
+            
+            return res.status(400).json({
+                status: 'error',
+                message: '¡El DNI no tiene el formato correcto!'
+            });
+        }
+    } catch (error) {
+        
+        return res.status(500).json({
+            status: 'error',
+            message: 'Ocurrio un error al actualizar el empleado',
+            error: message.error
+        });
+    }
+};
+
+export const searchEmpleado = async (req, res) => {
+
+    try {
+        const { nombre} = req.params;
+
+        if ( nombre === 'string' && nombre.trim() !== '' ) {
+
+            const empleado = await dbUpdateEmpleado(nombre);
+
+            return res.status(201).json({
+                status: 'success',
+                message: 'Empleado encontrado',
+                data: empleado
+            });
+        } else {
+            return res.status(400).json({
+                status: 'error',
+                message: 'El nombre no tiene el formato correcto',
+            });
+        }
+
+    } catch (error) {
+        return res.status(500).json({
+            status: 'error',
+            message: 'Ocurrio un error al buscar el empleado',
+            error: message.error
+        });
+    }
+};
