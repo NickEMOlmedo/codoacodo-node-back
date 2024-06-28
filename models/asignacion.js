@@ -12,7 +12,7 @@ export class Asignacion {
     }
 }
 
-export const addAsignacion = async (asignacion) => {
+export const dbAddAsignacion = async (asignacion) => {
 
     const { empleado_id, proyecto_id, fecha_asignacion, horas_trabajadas } = asignacion;
 
@@ -31,7 +31,7 @@ export const addAsignacion = async (asignacion) => {
     }
 }
 
-export const getAsignacion = async (id) => {
+export const dbGetAsignacion = async (id) => {
 
     try {
         const query = "SELECT * FROM asignaciones WHERE id = ?";
@@ -48,7 +48,7 @@ export const getAsignacion = async (id) => {
     }
 };
 
-export const deleteAsignacion = async (id) => {
+export const dbDeleteAsignacion = async (id) => {
 
     try {
         const query = "DELETE FROM asignaciones WHERE id = ?"
@@ -65,7 +65,7 @@ export const deleteAsignacion = async (id) => {
     }
 }
 
-export const updateAsignacion = async (asignacion) => {
+export const dbUpdateAsignacion = async (asignacion) => {
 
     const { empleado_id, proyecto_id, fecha_asignacion, horas_trabajadas } = asignacion;
 
@@ -85,7 +85,7 @@ export const updateAsignacion = async (asignacion) => {
     }
 }
 
-export const listarAsignaciones_empleado = async (id) => {
+export const dbListarAsignaciones_empleado = async (id) => {
 
     try {
         const query = "SELECT empleado_id, proyecto_id, fecha_inicio, horas_trabajadas FROM asignaciones WHERE empleado_id = ?";
