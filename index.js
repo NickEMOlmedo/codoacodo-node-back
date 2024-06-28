@@ -8,8 +8,11 @@ app.use(express.json());
 // app.use(express.static(path.join(__dirname), 'public'))
 
 import empleadosRouter from './routes/empleados.js';
+import asignacaionesRouter from './routes/empleados.js'
 
 app.use('/empleados', empleadosRouter);
+app.use('/asignaciones',asignacaionesRouter)
+
 
 app.get('/', (req, res) => {
   res.send('Hola desde index.js')
