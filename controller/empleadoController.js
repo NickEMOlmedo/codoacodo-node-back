@@ -11,9 +11,9 @@ const validarDni = (dni) => {
 export const addEmpleado = async (req, res) => {
 
     try {
-        const { nombre, apellido, dni, fecha_contratacion, salario, departamento, pais, cargo } = req.body;
+        const { nombre, apellido, dni, fecha_contratacion, salario, departamento_id, pais, cargo } = req.body;
 
-        if (!nombre || !apellido || !dni || !fecha_contratacion || !salario || !pais || !cargo) {
+        if (!nombre || !apellido || !dni || !fecha_contratacion || !salario || !departamento_id || !pais || !cargo) {
             return res.status(400).json({
                 status: 'fail',
                 message: '¡Todos los campos son requeridos!'
@@ -28,7 +28,7 @@ export const addEmpleado = async (req, res) => {
                 message: '¡El empleado ya existe!'
             });
         } else {
-            const newEmpleado = new Empleado(nombre, apellido, dni, fecha_contratacion, salario, departamento, pais, cargo);
+            const newEmpleado = new Empleado(nombre, apellido, dni, fecha_contratacion, salario, departamento_id, pais, cargo);
             const nuevoEmpleadoGuardado = await dbAddEmpleado(newEmpleado);
 
             return res.status(201).json({
