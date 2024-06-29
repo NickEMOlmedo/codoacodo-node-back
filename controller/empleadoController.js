@@ -13,7 +13,7 @@ export const addEmpleado = async (req, res) => {
     try {
         const { nombre, apellido, dni, fecha_contratacion, salario, departamento, pais, cargo } = req.body;
 
-        if (!nombre || !apellido || !dni || !fecha_contratacion || !salario || !departamento || !pais || !cargo) {
+        if (!nombre || !apellido || !dni || !fecha_contratacion || !salario || !pais || !cargo) {
             return res.status(400).json({
                 status: 'fail',
                 message: '¡Todos los campos son requeridos!'
@@ -41,7 +41,7 @@ export const addEmpleado = async (req, res) => {
         return res.status(500).json({
             status: 'error',
             message: 'Error al añadir el nuevo empleado',
-            error: message.error
+            error: error.message
         });
     }
 };
@@ -73,7 +73,7 @@ export const getEmpleado = async (req, res) => {
             return res.status(500).json({
                 status: 'error',
                 message: 'Error al solicitar el empleado',
-                error: message.error
+                error: error.message
             });
         }
 };
@@ -107,7 +107,7 @@ export const deleteEmpleado = async (req, res) => {
         return res.status(500).json({
             status: 'error',
             message: 'Error al eliminar empleado',
-            error: message.error
+            error: error.message
         });
     }
 };
@@ -139,7 +139,7 @@ export const updateEmpleado = async (req, res) => {
         return res.status(500).json({
             status: 'error',
             message: 'Ocurrio un error al actualizar el empleado',
-            error: message.error
+            error: error.message
         });
     }
 };
@@ -149,9 +149,9 @@ export const searchEmpleado = async (req, res) => {
     try {
         const { nombre} = req.params;
 
-        if ( nombre === 'string' && nombre.trim() !== '' ) {
+        if ( typeof nombre === 'string' && nombre.trim() !== '' ) {
 
-            const empleado = await dbUpdateEmpleado(nombre);
+            const empleado = await dbSearchEmpleado(nombre);
 
             return res.status(201).json({
                 status: 'success',
@@ -169,7 +169,7 @@ export const searchEmpleado = async (req, res) => {
         return res.status(500).json({
             status: 'error',
             message: 'Ocurrio un error al buscar el empleado',
-            error: message.error
+            error: error.message
         });
     }
 };

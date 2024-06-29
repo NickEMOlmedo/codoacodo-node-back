@@ -82,7 +82,7 @@ export const dbUpdateEmpleado = async (empleado) => {
   const { id, nombre, apellido, fecha_contratacion, salario, departamento, pais, cargo } = empleado;
 
   try {
-    const query = "UPDATE empleados SET nombre = ?, apellido = ?, fecha_contratacion = ?, salario = ?, departamento = ?, pais = ?, cargo = ? WHERE id = ? ";
+    const query = "UPDATE empleados SET nombre = ?, apellido = ?, fecha_contratacion = ?, salario = ?, departamento = ?, pais = ?, cargo = ? WHERE dni = ? ";
     const [results] = await pool.query(query, [nombre, apellido, fecha_contratacion, salario, departamento, pais, cargo, id]);
 
     if (results.affectedRows === 0) {
@@ -97,20 +97,19 @@ export const dbUpdateEmpleado = async (empleado) => {
 }
 
 export const dbSearchEmpleado = async (nombre) => {
-
   try {
-    const query = "SELECT id, nombre, apellido, fecha_contratacion, salario, departamento, pais, cargo FROM empleados WHERE nombre LIKE ?"
-    const [results] = await pool.query(query, [`%${nombre}%`]);
+      const query = "SELECT id, nombre, apellido, fecha_contratacion, salario, departamento, pais, cargo FROM empleados WHERE nombre LIKE ?";
+      const [results] = await pool.query(query, [`%${nombre}%`]);
 
-    if (results.length > 0) {
-      return { success: true, data: results };
-    } else {
-      return { success: false }; 
-    }
-  
+      if (results.length > 0) {
+          return { success: true, data: results };
+      } else {
+          return { success: false };
+      }
   } catch (error) {
-    throw error;
+      throw error;
   }
-}
+};
+
 
 

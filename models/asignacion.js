@@ -86,18 +86,16 @@ export const dbUpdateAsignacion = async (asignacion) => {
 }
 
 export const dbListarAsignaciones_empleado = async (id) => {
-
     try {
         const query = "SELECT empleado_id, proyecto_id, fecha_inicio, horas_trabajadas FROM asignaciones WHERE empleado_id = ?";
-        const [results] = await pool.query(query, [empleado_id]);
+        const [results] = await pool.query(query, [id]); // Usar 'id' en lugar de 'empleado_id'
 
         if (results.length > 0) {
             return { success: true, data: results };
         } else {
-            return { success: false };
+            return { success: false, message: 'No se encontraron asignaciones para este empleado.' }; // Añadir un mensaje explicativo
         }
-
     } catch (error) {
-        throw (error);
+        throw error;
     }
 }

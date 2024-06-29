@@ -1,5 +1,5 @@
 import { Router } from "express";
-import { addAsignacion,getAsignacion,deleteAsignacion,updateAsignacion,listarAsignaciones_empleado } from "../controller/asginacionController";
+import { addAsignacion,getAsignacion,deleteAsignacion,updateAsignacion,listarAsignaciones_empleado } from "../controller/asginacionController.js";
 
 const router = Router();
 
