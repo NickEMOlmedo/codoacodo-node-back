@@ -85,7 +85,7 @@ export const dbDeleteEmpleado = async (dni) => {
     if (results.affectedRows === 0) {
       return { success: false };
     } else {
-      return { success: true }
+      return { success: true, data: results }
     }
 
   } catch (error) {

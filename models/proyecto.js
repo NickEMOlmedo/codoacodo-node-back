@@ -22,7 +22,7 @@ export const dbAddProyecto = async (proyecto) => {
         if (results.affectedRows === 0) {
             return { success: false };
         } else {
-            return { success: true }
+            return { success: true, data: results}
         }
 
     } catch (error) {
@@ -53,7 +53,7 @@ export const dbListarProyectos = async () => {
         const [results] = await pool.query(query);
 
         if (results.length > 0) {
-            return { success: true }; 
+            return { success: true, data: results }; 
         } else {
             return { success: false };
         }
@@ -89,7 +89,7 @@ export const dbUpdateProyecto = async (proyecto) => {
         const [results] = await pool.query(query, [nombre, fecha_inicio, presupuesto, id]);
 
         if (results.affectedRows === 0) {
-            return { success: false };
+            return { success: false, data: results };
         } else {
             return { success: true }
         }

@@ -4,6 +4,7 @@ import bodyParser from 'body-parser';
 import empleadosRouter from './routes/empleados.js';
 import asignacionesRouter from './routes/asignaciones.js';
 import departamentoRouter from './routes/departamentos.js'; 
+import proyectosRouter from './routes/proyectos.js'; 
 
 const app = express();
 const port = process.env.PORT || 3000;
@@ -14,6 +15,7 @@ app.use(bodyParser.json());
 app.use('/empleados', empleadosRouter);
 app.use('/asignaciones', asignacionesRouter);
 app.use('/departamentos', departamentoRouter);
+app.use('/proyectos', proyectosRouter);
 
 app.get('/', (req, res) => {
   res.send('Hola desde index.js');

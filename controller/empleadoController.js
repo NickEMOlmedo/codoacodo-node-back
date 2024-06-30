@@ -88,7 +88,7 @@ export const listarEmpleados = async (req, res) => {
             return res.status(200).json({
                 status: 'success',
                 message: 'Empleados encontrados',
-                data: empleados.data
+                data: empleados
             })
         } else {
             return res.status(400).json({
@@ -119,7 +119,7 @@ export const deleteEmpleado = async (req, res) => {
                 return res.status(201).json({
                     status: 'success',
                     message: 'Empleado eliminado con exito',
-                    data: empleado.data
+                    data: empleado
                 });
             } else {
 

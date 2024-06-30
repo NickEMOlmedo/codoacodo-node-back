@@ -45,7 +45,7 @@ export const listarDepartamentos = async (req, res) => {
             return res.status(200).json({
                 status: 'success',
                 message: 'Departamentos encontrados',
-                data: departamentos.data
+                data: departamentos
             })
         } else {
             return res.status(404).json({
@@ -71,7 +71,7 @@ export const getDepartamentoById = async (req, res) => {
             return res.status(200).json({
                 status: 'success',
                 message: '¡Departamento encontrado!',
-                data: departamento.data
+                data: departamento
             });
         } else {
             return res.status(404).json({
@@ -151,7 +151,7 @@ export const searchDepartamento = async (req, res) => {
             return res.status(200).json({
                 status: 'success',
                 message: '¡Departamento encontrado!',
-                data: resultado.data
+                data: resultado
             });
         } else {
             return res.status(404).json({
