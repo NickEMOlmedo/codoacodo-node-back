@@ -1,4 +1,4 @@
-import { Empleado, dbAddEmpleado, dbGetEmpleado, dbDeleteEmpleado, dbUpdateEmpleado, dbSearchEmpleado} from '../models/empleado.js';
+import { Empleado, dbAddEmpleado, dbGetEmpleado, dbListarEmpleados, dbDeleteEmpleado, dbUpdateEmpleado, dbSearchEmpleado} from '../models/empleado.js';
 
 const validarDni = (dni) => {
     if (typeof dni === 'string' && dni.trim() !== '') {
@@ -77,7 +77,34 @@ export const getEmpleado = async (req, res) => {
             });
         }
 };
+
+export const listarEmpleados = async (req, res) => {
     
+    try {
+
+        const empleados = await dbListarEmpleados();
+
+        if (empleados.success) {
+            return res.status(200).json({
+                status: 'success',
+                message: 'Empleados encontrados',
+                data: empleados.data
+            })
+        } else {
+            return res.status(400).json({
+                status: 'fail',
+                message: '¡Empleados no encontrados!'
+            })
+        }
+
+    } catch (error) {
+        return res.status(500).json({
+            status: 'fail',
+            message: 'Ocurrio un error al buscar los empleados',
+            error: error.message
+        })
+    }
+}
 
 export const deleteEmpleado = async (req, res) => {
 
@@ -92,7 +119,7 @@ export const deleteEmpleado = async (req, res) => {
                 return res.status(201).json({
                     status: 'success',
                     message: 'Empleado eliminado con exito',
-                    data: empleado
+                    data: empleado.data
                 });
             } else {
 
@@ -120,15 +147,41 @@ export const updateEmpleado = async (req, res) => {
 
         if (dniNumber !== null) {
 
-            const empleado = await dbUpdateEmpleado(dniNumber);
-    
-            return res.status(201).json({
-                status: 'success',
-                message: 'Empleado actualizado con exito',
-                data: empleado
-            });
-        } else {
+            const { nombre, apellido, fecha_contratacion, salario, departamento_id, pais, cargo } = req.body;
+
+            if (!nombre || !apellido || !fecha_contratacion || !salario || !departamento_id || !pais || !cargo) {
+                return res.status(400).json({
+                    status: 'error',
+                    message: '¡Todos los campos son requeridos!'
+                });
+            }
+
+            const empleado = {
+                dni: dniNumber,
+                nombre,
+                apellido,
+                fecha_contratacion,
+                salario,
+                departamento_id,
+                pais,
+                cargo
+            };
+
+            const resultadoActualizacion = await dbUpdateEmpleado(empleado);
             
+            if(resultadoActualizacion.success) {
+                return res.status(201).json({
+                    status: 'success',
+                    message: 'Empleado actualizado con exito',
+                    data: resultadoActualizacion
+                });
+            } else {
+                return res.status(400).json({
+                    status: 'error',
+                    message: 'No se pudo actualizar el empleado. Verifica los datos ingresados.'
+                }); 
+            } 
+        } else {
             return res.status(400).json({
                 status: 'error',
                 message: '¡El DNI no tiene el formato correcto!'

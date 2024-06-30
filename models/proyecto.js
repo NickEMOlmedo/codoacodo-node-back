@@ -11,7 +11,7 @@ export class Proyecto {
     }
 };
 
-export const addProyecto = async (proyecto) => {
+export const dbAddProyecto = async (proyecto) => {
 
     const { nombre, fecha_inicio, presupuesto } = proyecto;
 
@@ -30,7 +30,7 @@ export const addProyecto = async (proyecto) => {
     }
 }
 
-export const getProyecto = async (id) => {
+export const dbGetProyecto = async (id) => {
 
     try {
         const query = "SELECT * FROM proyectos WHERE id = ?"
@@ -46,7 +46,24 @@ export const getProyecto = async (id) => {
     }
 }
 
-export const deleteProyecto = async (id) => {
+export const dbListarProyectos = async () => {
+
+    try {
+        const query = "SELECT * FROM proyectos"
+        const [results] = await pool.query(query);
+
+        if (results.length > 0) {
+            return { success: true }; 
+        } else {
+            return { success: false };
+        }
+
+    } catch (error) {
+        throw (error);
+    }
+}
+
+export const dbDeleteProyecto = async (id) => {
 
     try {
         const query = "DELETE FROM proyectos WHERE id = ?"
@@ -63,7 +80,7 @@ export const deleteProyecto = async (id) => {
     }
 }
 
-export const updateProyecto = async (proyecto) => {
+export const dbUpdateProyecto = async (proyecto) => {
 
     const { id, nombre, fecha_inicio, presupuesto } = proyecto;
 
@@ -82,7 +99,7 @@ export const updateProyecto = async (proyecto) => {
     }
 }
 
-export const searchProyecto = async (nombre) => {
+export const dbSearchProyecto = async (nombre) => {
 
     try {
         const query = "SELECT id, fecha_inicio,presupuesto FROM proyectos WHERE nombre LIKE ?";

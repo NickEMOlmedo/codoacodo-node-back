@@ -9,7 +9,7 @@ export class Empleado {
     this.dni = dni;
     this.fecha_contratacion = fecha_contratacion;
     this.salario = salario;
-    this.departamento = departamento_id;
+    this.departamento_id = departamento_id;
     this.pais = pais;
     this.cargo = cargo;
   }
@@ -28,7 +28,7 @@ export const dbAddEmpleado = async (empleado) => {
       cargo,
     } = empleado;
     const query =
-      "INSERT INTO empleados (nombre, apellido, fecha_contratacion, salario, departamento_id, pais, cargo) VALUES (?,?,?,?,?,?,?)";
+      "INSERT INTO empleados (nombre, apellido, dni, fecha_contratacion, salario, departamento_id, pais, cargo) VALUES (?,?,?,?,?,?,?,?)";
     const [results] = await pool.query(query, [nombre, apellido, dni, fecha_contratacion, salario, departamento_id, pais, cargo]);
    
     if (results.affectedRows === 0) {
@@ -60,6 +60,22 @@ export const dbGetEmpleado = async (dni) => {
   }
 };
 
+export const dbListarEmpleados = async () => {
+  try {
+    const query = "SELECT * FROM empleados";
+    const [results] = await pool.query(query);
+
+    if (results.length > 0) {
+      return { success: true, data: results };
+    } else {
+      return { success: false };
+    };
+
+  } catch (error) {
+    throw error;
+  }
+}
+
 export const dbDeleteEmpleado = async (dni) => {
 
   try {
@@ -78,23 +94,22 @@ export const dbDeleteEmpleado = async (dni) => {
 }
 
 export const dbUpdateEmpleado = async (empleado) => {
-
-  const { id, nombre, apellido, fecha_contratacion, salario, departamento_id, pais, cargo } = empleado;
+  
+  const { dni, nombre, apellido, fecha_contratacion, salario, departamento_id, pais, cargo } = empleado;
 
   try {
-    const query = "UPDATE empleados SET nombre = ?, apellido = ?, fecha_contratacion = ?, salario = ?, departamento_id = ?, pais = ?, cargo = ? WHERE dni = ? ";
-    const [results] = await pool.query(query, [nombre, apellido, fecha_contratacion, salario, departamento_id, pais, cargo, id]);
+    const query = "UPDATE empleados SET nombre = ?, apellido = ?, fecha_contratacion = ?, salario = ?, departamento_id = ?, pais = ?, cargo = ? WHERE dni = ?";
+    const [results] = await pool.query(query, [nombre, apellido, fecha_contratacion, salario, departamento_id, pais, cargo, dni]);
 
     if (results.affectedRows === 0) {
       return { success: false };
     } else {
-      return { success: true }
+      return { success: true, data: results };
     }
-    
   } catch (error) {
-    throw (error);
+    throw error;
   }
-}
+};
 
 export const dbSearchEmpleado = async (nombre) => {
   try {

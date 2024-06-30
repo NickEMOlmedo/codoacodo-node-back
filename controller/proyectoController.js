@@ -1,96 +1,124 @@
-import { Proyecto, addProyecto, getProyecto, deleteProyecto, updateProyecto, searchProyecto } from "../models/proyecto.js";
+// import { Proyecto, dbAddProyecto, dbGetProyecto, dbListarProyectos, dbUpdateProyecto, dbDeleteProyecto, dbSearchProyecto} from "../models/proyecto.js";
 
-exports.addProyecto = async (req, res) => {
+// const validarId = (id) => {
+//     if( typeof id === 'string' && id.trim() !== '') {
+//         const idNumber = parseInt(id, 10);
+//         return Number.isFinite(idNumber) ? dniNumber : null;
+//     } 
+//     return null;
+// }
 
-    try {
+
+// export const addProyecto = async (req, res) => {
+
+//     try {
         
-        const { nombre, fecha_inicio, presupuesto } = req.body
+//         const { nombre, fecha_inicio, presupuesto } = req.body
 
-        if ( !nombre || !fecha_inicio || !presupuesto) {
+//         if ( !nombre || !fecha_inicio || !presupuesto) {
 
-            return res.status(400).json({
+//             return res.status(400).json({
+//                 stauts: 'fail',
+//                 message: '¡Todos los campos son requeridos!'
+//             });
 
-                stauts: 'fail',
-                message: '¡Todos los campos son requeridos!'
-            })
+//         }
 
-        }
+//         const verificarProyecto = await dbGetProyecto(id);
 
-        const verificarProyecto = await getProyecto(id);
+//         if (verificarProyecto.success) {
 
-        if (verificarProyecto.success) {
-
-            return res.status(404).json({
-                status: 'fail',
-                message: '¡El proyecto ya existe!'
-            })
-        } else {
-            const newProyecto = new Proyecto(nombre, fecha_inicio, presupuesto);
-
-            const nuevoProyectoGuardado = await addProyecto(newProyecto);
+//             return res.status(404).json({
+//                 status: 'fail',
+//                 message: '¡El proyecto ya existe!'
+//             });
+//         } else {
+//             const newProyecto = new Proyecto(nombre, fecha_inicio, presupuesto);
+//             const nuevoProyectoGuardado = await dbAddProyecto(newProyecto);
             
-            return res.status(201).json({
-                status: 'success',
-                message: 'Nuevo proyecto agregado con exito...',
-                data: nuevoProyectoGuardado
-            })
-        }
+//             return res.status(201).json({
+//                 status: 'success',
+//                 message: 'Nuevo proyecto agregado con exito...',
+//                 data: nuevoProyectoGuardado
+//             })
+//         }
         
-    } catch (error) {
+//     } catch (error) {
         
-        return res.status(500).json({
-            status: 'error',
-            message: 'Error al añadir el nuevo proyecto',
-            error: error.message
-        })
-    }
+//         return res.status(500).json({
+//             status: 'error',
+//             message: 'Error al añadir el nuevo proyecto',
+//             error: error.message
+//         })
+//     }
 
-}
+// }
 
-exports.getProyecto = async (req, res) => {
+// export const getProyecto = async (req, res) => {
 
-    try {
+//     try {
         
-        const {id} = req.body;
+//         const { id } = req.params;
+//         const idNumber = validarId(id);
 
-        if ( typeof(dni) === 'number' && Number.isFinite(id)){
+//         if ( idNumber !== null ){
 
-            const proyecto = await getProyecto(id);
-
-            res.status(201).json({
-                status: 'success',
-                message: 'Operacion realizada con exito...',
-                data: proyecto
-            })
-        } else {
-            res.status(401).json({
-
-                status: 'error',
-                message: 'No pudimos encontrar el proyecto, el id es incorrecto'
-
-            })
-        }
-
-    } catch (error) {
+//             const proyecto = await dbGetProyecto(idNumber);
         
-        res.status(500).json({
+//             if (proyecto) {
+//                 res.status(200).json({
+//                     status: 'success',
+//                     message: 'Operacion realizada con exito...',
+//                     data: proyecto
+//                 })
+//             } else {
+//                 return res.status(404).json({
+//                     status: 'error',
+//                     message: 'No pudimos encontrar el proyecto con ese id'
+//                 })
+//             }
+//         }
+//         else {
+//             res.status(400).json({
 
-            status: 'error',
-            message: 'Error en la solicitud',
-            error: error.message
-        })
-    }
-}
+//                 status: 'error',
+//                 message: 'El id no es valido'
 
+//             })
+//         }
 
-exports.deleteProyecto = async (req, res)  => {
-
-    try {
+//     } catch (error) {
         
-        const {id} = req.body;
+//         res.status(500).json({
 
-        if ( typeof(id) == Number && isFinite(id))
-    } catch (error) {
+//             status: 'error',
+//             message: 'Error en la solicitud',
+//             error: error.message
+//         })
+//     }
+// }
+
+// export const listarProyectos = async (req, res) =>
+
+// exports.deleteProyecto = async (req, res)  => {
+
+//     try {
         
-    }
-}
+//         const {id} = req.params;
+//         const idNumber = validarId(id);
+
+//         if (idNumber !== null) {
+
+//             const proyecto = await dbDeleteProyecto(idNumber);
+
+//             return res.status(200).json({
+//                 status: 'success',
+//                 message: 'Proyecto eliminado con exito',
+//                 data: proyecto.data
+//             })
+//         }
+
+//     } catch (error) {
+        
+//     }
+// }
