@@ -1,3 +1,4 @@
+import e from "express";
 import { pool } from "../config/dbConnection.js";
 
 export class Departamento {
@@ -29,7 +30,23 @@ export const dbAddDepartamento = async (departamento) => {
     }
 }
 
-export const dbGetDepartamento = async (id) => {
+export const dbListarDepartamentos = async () => {
+
+    try {
+        const query = "SELECT * FROM departamentos";
+        const [results] = await pool.query(query);
+
+        if (results.length > 0) {
+            return { success: true, data: results };
+        } else {
+            return { success: false };
+        };
+    } catch (error) {
+        throw error;
+    }
+}
+
+export const dbGetDepartamentoById = async (id) => {
 
     try {
         const query = "SELECT * FROM departamentos WHERE id = ?";

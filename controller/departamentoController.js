@@ -1,4 +1,4 @@
-import { Departamento, dbAddDepartamento, dbGetDepartamento, dbDeleteDepartamento, dbUpdateDepartamento, dbSearchDepartamento } from '../models/departamento.js'
+import { Departamento, dbAddDepartamento, dbListarDepartamentos, dbGetDepartamentoById, dbDeleteDepartamento, dbUpdateDepartamento, dbSearchDepartamento } from '../models/departamento.js'
 
 export const addDepartamento = async (req, res) => {
     try {
@@ -37,10 +37,35 @@ export const addDepartamento = async (req, res) => {
     }
 };
 
-export const getDepartamento = async (req, res) => {
+export const listarDepartamentos = async (req, res) => {
+    try {
+        const departamentos = await dbListarDepartamentos();
+
+        if (departamentos.success) {
+            return res.status(200).json({
+                status: 'success',
+                message: 'Departamentos encontrados',
+                data: departamentos.data
+            })
+        } else {
+            return res.status(404).json({
+                status: 'fail',
+                message: '¡Departamentos no encontrados!'
+            });
+        }
+    } catch (error) {
+        return res.status(500).json({
+            status: 'error',
+            message: 'Error al buscar los departamentos',
+            error: error.message
+        });
+    }
+}
+
+export const getDepartamentoById = async (req, res) => {
     try {
         const { id } = req.params;
-        const departamento = await dbGetDepartamento(id);
+        const departamento = await dbGetDepartamentoById(id);
 
         if (departamento.success) {
             return res.status(200).json({
