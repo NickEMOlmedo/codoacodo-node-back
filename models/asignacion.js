@@ -21,9 +21,9 @@ export const dbAddAsignacion = async (asignacion) => {
         const [results] = await pool.query(query, [empleado_id, proyecto_id, fecha_asignacion, horas_trabajadas]);
 
         if (results.affectedRows === 0) {
-            return { success: false };
+            return { success: false ,message:`no se encontro la asignacion con el id ` };
         } else {
-            return { success: true }
+            return { success: true , data: results }
         }
 
     } catch (error) {
@@ -38,9 +38,9 @@ export const dbGetAsignacion = async (id) => {
         const [results] = await pool.query(query, [id]);
 
         if (results.length > 0) {
-            return { success: true, data: results };
+            return { success: true, data: results  };
         } else {
-            return { success: false };
+            return { success: false};
         }
 
     } catch (error) {
@@ -55,9 +55,9 @@ export const dbDeleteAsignacion = async (id) => {
         const [results] = await pool.query(query, [id]);
 
         if (results.affectedRows === 0) {
-            return { success: false };
+            return { success: false ,message: `No se encontró ninguna asignación con ID ${id}`};
         } else {
-            return { success: true }
+            return { success: true, message: `Asignación con ID ${id} eliminada correctamente`   }
         }
 
     } catch (error) {
@@ -67,17 +67,17 @@ export const dbDeleteAsignacion = async (id) => {
 
 export const dbUpdateAsignacion = async (asignacion) => {
 
-    const { empleado_id, proyecto_id, fecha_asignacion, horas_trabajadas } = asignacion;
+    const {  empleado_id, proyecto_id, fecha_asignacion, horas_trabajadas , id} = asignacion;
 
     try {
         const query = "UPDATE asignaciones SET empleado_id = ?, proyecto_id = ?, fecha_asignacion = ?, horas_trabajadas = ? WHERE id = ?";
 
-        const [results] = await pool.query(query, [empleado_id, proyecto_id, fecha_asignacion, horas_trabajadas, asignacion.id]);
+        const [results] = await pool.query(query, [empleado_id, proyecto_id, fecha_asignacion, horas_trabajadas, id]);
         
         if (results.affectedRows === 0) {
-            return { success: false };
+            return { success: false , message:`no se encontro la asignacion con el id ${id} `};
         } else {
-            return { success: true }
+            return { success: true , data: results}
         }
 
     } catch (error) {
@@ -85,15 +85,15 @@ export const dbUpdateAsignacion = async (asignacion) => {
     }
 }
 
-export const dbListarAsignaciones_empleado = async (id) => {
+export const dbListarAsignaciones = async () => {
     try {
-        const query = "SELECT empleado_id, proyecto_id, fecha_inicio, horas_trabajadas FROM asignaciones WHERE empleado_id = ?";
-        const [results] = await pool.query(query, [id]); // Usar 'id' en lugar de 'empleado_id'
+        const query = "SELECT * FROM asignaciones";
+        const [results] = await pool.query(query); // Usar 'id' en lugar de 'empleado_id'
 
         if (results.length > 0) {
             return { success: true, data: results };
         } else {
-            return { success: false, message: 'No se encontraron asignaciones para este empleado.' }; // Añadir un mensaje explicativo
+            return { success: false }; // Añadir un mensaje explicativo
         }
     } catch (error) {
         throw error;

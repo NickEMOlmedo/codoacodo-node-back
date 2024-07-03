@@ -1,12 +1,12 @@
 import { Router } from "express";
-import { addAsignacion,getAsignacion,deleteAsignacion,updateAsignacion,listarAsignaciones_empleado } from "../controller/asginacionController.js";
+import { addAsignacion,getAsignacion,deleteAsignacion,updateAsignacion,listarAsignaciones } from "../controller/asginacionController.js";
 
 const router = Router();
 
 router.post('/',addAsignacion)
-router.get('/',getAsignacion)
-router.delete('/',deleteAsignacion)
-router.put('/',updateAsignacion)
-router.get('/',listarAsignaciones_empleado)
+router.get('/:id',getAsignacion)
+router.delete('/:id',deleteAsignacion)
+router.put('/:id',updateAsignacion)
+router.get('/',listarAsignaciones)
 
 export default router
