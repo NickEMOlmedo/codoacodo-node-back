@@ -1,8 +1,10 @@
 // FUNCIONES PARA EL LOGIN Y REGISTRO DE USUARIOS 
 // CON JSONWEBTOKEN Y BCRYPTJS
 
-import { verify } from "jsonwebtoken";
-import { Usuario, dbRegisterUser, dbLoginUser, verificarToken } from "../models/usuarios";
+import pkg from 'jsonwebtoken';
+const { verify } = pkg;
+
+import { Usuario, dbRegisterUser, dbLoginUser, verificarToken } from "../models/usuarios.js";
 
 export const registerUser = async (req, res) => {
     try {
