@@ -1,4 +1,4 @@
-import { Empleado, dbAddEmpleado, dbGetEmpleado, dbListarEmpleados, dbDeleteEmpleado, dbUpdateEmpleado, dbSearchEmpleado} from '../models/empleado.js';
+import { Empleado, dbAddEmpleado, dbGetEmpleado, dbListarEmpleados, dbDeleteEmpleado, dbUpdateEmpleado, dbGetEmpleadoById} from '../models/empleado.js';
 
 const validarDni = (dni) => {
     if (typeof dni === 'string' && dni.trim() !== '') {
@@ -65,6 +65,38 @@ export const getEmpleado = async (req, res) => {
                 return res.status(400).json({
                     status: 'error',
                     message: '¡El DNI ingresado no tiene el formato correcto!'
+                });
+            }
+
+        } catch (error) {
+
+            return res.status(500).json({
+                status: 'error',
+                message: 'Error al solicitar el empleado',
+                error: error.message
+            });
+        }
+};
+
+export const getEmpleadoById = async (req, res) => {
+
+    try {
+        const { id } = req.params;
+        const dniNumber = validarDni(id);
+
+            if (dniNumber !== null) {
+
+                const empleado = await dbGetEmpleadoById(id);
+
+                return res.status(201).json({
+                    status: 'success',
+                    message: '¡Operación Realizada Exitosamente!',
+                    data: empleado
+                });
+            } else {
+                return res.status(400).json({
+                    status: 'error',
+                    message: '¡El ID ingresado no tiene el formato correcto!'
                 });
             }
 

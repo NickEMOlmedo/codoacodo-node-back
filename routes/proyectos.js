@@ -1,5 +1,5 @@
 import { Router } from 'express';
-import { addProyecto, getProyecto, listarProyectos, deleteProyecto, updateProyecto, searchProyecto } from '../controller/proyectoController.js';
+import { addProyecto, getProyecto, listarProyectos, deleteProyecto, updateProyecto } from '../controller/proyectoController.js';
 import { verifiarUsuarioToken } from '../controller/usuariosController.js';
 
 const router = Router();
