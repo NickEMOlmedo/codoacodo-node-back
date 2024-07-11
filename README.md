@@ -20,20 +20,20 @@ facilitando la creación, lectura, actualización y eliminación (CRUD) de datos
 # Prueba de rutas en postman
 
 
-1. Debe registrar un usuario
+## 1. Debe registrar un usuario
 
 POST      https://sistema-gestion-de-empleados-backend-2024.vercel.app/usuarios/register
 { "username": "ejemplo@mail.com",
   "password": "ejemplo123" }
 
 
-2. Logear
+## 2. Logear
 
 POST      https://sistema-gestion-de-empleados-backend-2024.vercel.app/usuarios/login
 { "username": "ejemplo@mail.com",
   "password": "ejemplo123" }
 
-## Postman devolvera un token el cual debe utilizar en header. En key colocal authorization y en value el token recibido sin comillas.
+ Postman devolvera un token el cual debe utilizar en header. En key colocal authorization y en value el token recibido sin comillas.
 
 {
     "status": "success",
