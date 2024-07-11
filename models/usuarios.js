@@ -20,7 +20,7 @@ export const dbRegisterUser = async (user) => {
     try {
         const hashedPassword = await bcrypt.hash(password, 10);
 
-        const query = "INSERT INTO usuarios (username, password) VALUES (?,?)";
+        const query = "INSERT INTO usuario (username, password) VALUES (?,?)";
         const [results] = await pool.query(query, [username, hashedPassword]);
 
         if (results.affectedRows === 0) {

@@ -28,7 +28,7 @@ export const registerUser = async (req, res) => {
         } else {
             return res.status(400).json({
                 status: 'fail',
-                message: 'Erroral registrar el usuario'
+                message: 'Error al registrar el usuario'
             })
         }
     } catch (error) {

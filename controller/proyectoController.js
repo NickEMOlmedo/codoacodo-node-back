@@ -1,4 +1,4 @@
-import { Proyecto, dbAddProyecto, dbGetProyecto, dbListarProyectos, dbUpdateProyecto, dbDeleteProyecto, dbSearchProyecto} from "../models/proyecto.js";
+import { Proyecto, dbAddProyecto, dbGetProyecto, dbListarProyectos, dbUpdateProyecto, dbDeleteProyecto } from "../models/proyecto.js";
 
 const validarId = (id) => {
     if( typeof id === 'string' && id.trim() !== '') {
