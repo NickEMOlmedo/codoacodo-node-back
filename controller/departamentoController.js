@@ -1,4 +1,4 @@
-import { Departamento, dbAddDepartamento, dbListarDepartamentos, dbGetDepartamentoById, dbDeleteDepartamento, dbUpdateDepartamento, dbSearchDepartamento } from '../models/departamento.js'
+import { Departamento, dbAddDepartamento, dbListarDepartamentos, dbGetDepartamentoById, dbDeleteDepartamento, dbUpdateDepartamento } from '../models/departamento.js'
 
 export const addDepartamento = async (req, res) => {
     try {

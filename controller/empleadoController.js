@@ -1,4 +1,4 @@
-import { Empleado, dbAddEmpleado, dbGetEmpleado, dbListarEmpleados, dbDeleteEmpleado, dbUpdateEmpleado, dbSearchEmpleado} from '../models/empleado.js';
+import { Empleado, dbAddEmpleado, dbGetEmpleado, dbListarEmpleados, dbDeleteEmpleado, dbUpdateEmpleado} from '../models/empleado.js';
 
 const validarDni = (dni) => {
     if (typeof dni === 'string' && dni.trim() !== '') {
