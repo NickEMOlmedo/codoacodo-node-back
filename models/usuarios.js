@@ -69,7 +69,7 @@ export const dbLoginUser = async (username, password) => {
 // Verificar token JWT
 export const verificarToken = (token) => {
     try {
-        const decoded = token.verify(token, secretJWT);
+        const decoded = jwt.verify(token, secretJWT);
         return {success: true, data: decoded};
     } catch (error) {
         return { success: false, message: 'Token invalido'};
