@@ -142,28 +142,3 @@ export const updateDepartamento = async (req, res) => {
     }
 };
 
-export const searchDepartamento = async (req, res) => {
-    try {
-        const { nombre } = req.params;
-        const resultado = await dbSearchDepartamento(nombre);
-
-        if (resultado.success) {
-            return res.status(200).json({
-                status: 'success',
-                message: '¡Departamento encontrado!',
-                data: resultado
-            });
-        } else {
-            return res.status(404).json({
-                status: 'fail',
-                message: '¡Departamento no encontrado!'
-            });
-        }
-    } catch (error) {
-        return res.status(500).json({
-            status: 'error',
-            message: 'Error al buscar el departamento',
-            error: error.message
-        });
-    }
-};

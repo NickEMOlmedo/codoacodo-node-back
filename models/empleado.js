@@ -111,20 +111,6 @@ export const dbUpdateEmpleado = async (empleado) => {
   }
 };
 
-export const dbSearchEmpleado = async (nombre) => {
-  try {
-      const query = "SELECT id, nombre, apellido, fecha_contratacion, salario, departamento_id, pais, cargo FROM empleados WHERE nombre LIKE ?";
-      const [results] = await pool.query(query, [`%${nombre}%`]);
-
-      if (results.length > 0) {
-          return { success: true, data: results };
-      } else {
-          return { success: false };
-      }
-  } catch (error) {
-      throw error;
-  }
-};
 
 
 

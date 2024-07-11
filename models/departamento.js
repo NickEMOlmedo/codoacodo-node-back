@@ -101,22 +101,6 @@ export const dbUpdateDepartamento = async (departamento) => {
 }
 
 
-export const dbSearchDepartamento = async (nombre) => {
-
-    try {
-        const query = "SELECT id,nombre,ubicacion FROM departamentos WHERE nombre LIKE ?"
-        const [results] = await pool.query(query, [`%${nombre}%`]);
-
-        if (results.length > 0) {
-            return { success: true, data: results };
-        } else {
-            return { success: false };
-        }
-
-    } catch (error) {
-        throw (error);
-    }
-}
 
 
 

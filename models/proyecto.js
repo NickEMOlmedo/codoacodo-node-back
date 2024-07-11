@@ -99,22 +99,7 @@ export const dbUpdateProyecto = async (proyecto) => {
     }
 }
 
-export const dbSearchProyecto = async (nombre) => {
 
-    try {
-        const query = "SELECT id, fecha_inicio,presupuesto FROM proyectos WHERE nombre LIKE ?";
-        const [results] = await pool.query(query, [`%${nombre}%`]);
-
-        if (results.length > 0) {
-            return { success: true, data: results };
-        } else {
-            return { success: false };
-        }
-
-    } catch (error) {
-        throw (error);
-    }
-}
 
 
 

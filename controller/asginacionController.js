@@ -23,7 +23,7 @@ export const addAsignacion = async (req, res) => {
             fecha_asignacion: fecha_asignacion,
             horas_trabajadas: horas_trabajadas,
         };
-            const nuevaAsignacionGuardada = await dbAddAsignacion(newAsignacion);
+            const nuevaAsignacionGuardada = await dbAddAsignacion(new Asignacion);
 
             if (nuevaAsignacionGuardada.success) {
                 

@@ -197,32 +197,3 @@ export const updateEmpleado = async (req, res) => {
     }
 };
 
-export const searchEmpleado = async (req, res) => {
-
-    try {
-        const { nombre} = req.params;
-
-        if ( typeof nombre === 'string' && nombre.trim() !== '' ) {
-
-            const empleado = await dbSearchEmpleado(nombre);
-
-            return res.status(201).json({
-                status: 'success',
-                message: 'Empleado encontrado',
-                data: empleado
-            });
-        } else {
-            return res.status(400).json({
-                status: 'error',
-                message: 'El nombre no tiene el formato correcto',
-            });
-        }
-
-    } catch (error) {
-        return res.status(500).json({
-            status: 'error',
-            message: 'Ocurrio un error al buscar el empleado',
-            error: error.message
-        });
-    }
-};

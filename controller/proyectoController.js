@@ -190,28 +190,3 @@ export const updateProyecto = async (req, res) => {
     }
 };
 
-export const searchProyecto = async (req, res) => {
-    try {
-        const { nombre } = req.params;
-        const resultado = await dbSearchProyecto(nombre);
-
-        if (resultado.success) {
-            return res.status(200).json({
-                status: 'success',
-                message: '¡Proyecto encontrado!',
-                data: resultado
-            });
-        } else {
-            return res.status(404).json({
-                status: 'fail',
-                message: '¡Proyecto no encontrado!'
-            });
-        }
-    } catch (error) {
-        return res.status(500).json({
-            status: 'error',
-            message: 'Error al buscar el proyecto',
-            error: error.message
-        });
-    }
-};
