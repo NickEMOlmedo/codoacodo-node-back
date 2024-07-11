@@ -60,6 +60,24 @@ export const dbGetEmpleado = async (dni) => {
   }
 };
 
+export const dbGetEmpleadoById = async (id) => {
+
+  try {
+    const query =
+      "SELECT id, nombre, apellido, fecha_contratacion, salario, departamento_id, pais, cargo FROM empleados WHERE id = ?"
+    const [results] = await pool.query(query, [id]);
+
+    if (results.length > 0) {
+      return { success: true, data: results }; 
+    } else {
+      return { success: false }; 
+    }
+
+  } catch (error) {
+    throw error;
+  }
+};
+
 export const dbListarEmpleados = async () => {
   try {
     const query = "SELECT * FROM empleados";
