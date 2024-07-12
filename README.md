@@ -83,7 +83,7 @@ POST      https://sistema-gestion-de-empleados-backend-2024.vercel.app/usuarios/
 -----------------
 
  - GET     https://sistema-gestion-de-empleados-backend-2024.vercel.app/proyectos (Lista todos los proyectos)
- - GET     https://sistema-gestion-de-empleados-backend-2024.vercel.app/proyectos/id (Te devuelve un empleado por id)
+ - GET     https://sistema-gestion-de-empleados-backend-2024.vercel.app/proyectos/id (Te devuelve un proyecto por id)
  - POST    https://sistema-gestion-de-empleados-backend-2024.vercel.app/proyectos (Añade un nuevo proyecto)
    {
   "nombre": "Nuevo Proyecto",
@@ -92,7 +92,7 @@ POST      https://sistema-gestion-de-empleados-backend-2024.vercel.app/usuarios/
 }
 
 
-- PUT     https://sistema-gestion-de-empleados-backend-2024.vercel.app/empleados/dni (Actualiza un proyecto por su id)
+- PUT     https://sistema-gestion-de-empleados-backend-2024.vercel.app/proyectos/dni (Actualiza un proyecto por su id)
   
 {
   "nombre": "Nuevo Proyecto actualizado",
@@ -100,7 +100,7 @@ POST      https://sistema-gestion-de-empleados-backend-2024.vercel.app/usuarios/
   "presupuesto": 1564876
 }
 
-- DELETE     https://sistema-gestion-de-empleados-backend-2024.vercel.app/empleados/dni (Elimina un proyecto por su id)
+- DELETE     https://sistema-gestion-de-empleados-backend-2024.vercel.app/proyectos/id (Elimina un proyecto por su id)
 
 --------------------
 |  # DEPARTAMENTOS  |
